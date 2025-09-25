@@ -3,24 +3,21 @@ import bodyParser from "body-parser";
 
 const app = express();
 app.use(bodyParser.json());
- 
-app.post("/api/sms/incoming", (req, res) => {
-    const { from, message, secret } = req.body;
 
-    if (secret !== "12345") {
-        return res.status(403).json({ success: false, error: "Invalid secret" });
+app.post("/api/sms/incoming", (req, res) => {
+    const { from, message } = req.body;
+
+    if (!from || !message) {
+        return res.status(400).json({ success: false, error: "Missing fields" });
     }
 
     console.log("📩 SMS Received:");
     console.log("From:", from);
     console.log("Message:", message);
 
-    // ✅ SMSSync expects this exact format
-    res.json({
-        success: true,
-        error: null
-    });
+    res.json({ success: true, error: null });
 });
+
 
 
 const PORT = 5000;
