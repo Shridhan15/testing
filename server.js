@@ -3,11 +3,7 @@ import bodyParser from "body-parser";
 
 const app = express();
 app.use(bodyParser.json());
-
-app.use("/", (req, res) => {
-    res.send("Hello World");
-});
-
+ 
 app.post("/api/sms/incoming", (req, res) => {
     const { from, message, secret } = req.body;
 
